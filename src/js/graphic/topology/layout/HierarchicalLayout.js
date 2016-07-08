@@ -1,17 +1,17 @@
-(function (nx, global) {
+(function(nx, global) {
 
     nx.define("nx.graphic.Topology.HierarchicalLayout", {
         properties: {
             topology: {},
             levelBy: {
-                value: function () {
-                    return function (inNode) {
+                value: function() {
+                    return function(inNode) {
                         return inNode.model().get("role");
                     };
                 }
             },
             sortOrder: {
-                value: function () {
+                value: function() {
                     return [];
                 }
             },
@@ -28,17 +28,19 @@
         },
         methods: {
 
-            process: function (graph, config, callback) {
+            process: function(graph, config, callback) {
                 var groups = this._group(graph, config || {});
                 var nodesPositionObject = this._calc(groups, config || {});
 
                 this._layout(nodesPositionObject, callback);
             },
-            _group: function (graph, config) {
-                var groups = {'__other__': []};
+            _group: function(graph, config) {
+                var groups = {
+                    '__other__': []
+                };
                 var topo = this.topology();
                 var levelBy = config.levelBy || this.levelBy();
-                topo.eachNode(function (node) {
+                topo.eachNode(function(node) {
                     var key;
                     if (nx.is(levelBy, 'String') && levelBy.substr(5) == 'model') {
                         key = node.model().get(levelBy.substring(6));
@@ -56,16 +58,26 @@
                 });
                 return groups;
             },
-            _calc: function (groups, config) {
-                var nodesPositionObject = {}, keys = Object.keys(groups);
+            _calc: function(groups, config) {
+                var nodesPositionObject = {},
+                    keys = Object.keys(groups);
                 var topo = this.topology();
                 var sortOrder = config.sortOrder || this.sortOrder() || [];
 
                 //build order array, and move __other__ to the last
-
                 var order = [];
-                nx.each(sortOrder, function (v) {
-                    var index = keys.indexOf(v);
+                nx.each(sortOrder, function(v) {
+                    var index = keys.indexOf(v.toUpperCase());
+                    /* jshint ignore:start */
+                    switch (index) {
+                        case -1:
+                            index = keys.indexOf(v.toLowerCase());
+                        case -1:
+                            index = keys.indexOf(v);
+
+                    }
+                    /* jshint ignore:end */
+
                     if (index !== -1) {
                         order.push(v);
                         keys.splice(index, 1);
@@ -86,17 +98,18 @@
 
                 var perY = height / (order.length + 1);
                 var perX = width / (order.length + 1);
-                var x = perX, y = perY;
+                var x = perX,
+                    y = perY;
 
                 //'vertical'
 
-                nx.each(order, function (key) {
+                nx.each(order, function(key) {
                     if (groups[key]) {
 
                         if (direction == 'vertical') {
                             //build nodes position map
                             perX = width / (groups[key].length + 1);
-                            nx.each(groups[key], function (node, i) {
+                            nx.each(groups[key], function(node, i) {
                                 nodesPositionObject[node.id()] = {
                                     x: perX * (i + 1),
                                     y: y
@@ -106,7 +119,7 @@
                         } else {
                             //build nodes position map
                             perY = height / (groups[key].length + 1);
-                            nx.each(groups[key], function (node, i) {
+                            nx.each(groups[key], function(node, i) {
                                 nodesPositionObject[node.id()] = {
                                     x: x,
                                     y: perY * (i + 1)
@@ -126,28 +139,29 @@
                 return nodesPositionObject;
 
             },
-            _sort: function (groups, order) {
+            _sort: function(groups, order) {
                 var topo = this.topology();
                 var graph = topo.graph();
 
-                groups[order[0]].sort(function (a, b) {
+                groups[order[0]].sort(function(a, b) {
                     return Object.keys(b.model().edgeSets()).length - Object.keys(a.model().edgeSets()).length;
                 });
 
                 for (var i = 0; i < order.length - 1; i++) {
                     var firstGroup = groups[order[i]];
                     var secondGroup = groups[order[i + 1]];
-                    var ary = [], indexs = [];
+                    var ary = [],
+                        indexs = [];
                     /* jshint -W083 */
-                    nx.each(firstGroup, function (fNode) {
+                    nx.each(firstGroup, function(fNode) {
                         var temp = [];
-                        nx.each(secondGroup, function (sNode, i) {
+                        nx.each(secondGroup, function(sNode, i) {
                             if (graph.getEdgesBySourceAndTarget(fNode, sNode) != null && temp.indexOf(sNode) != -1) {
                                 temp.push(sNode);
                                 indexs.push(i);
                             }
                         });
-                        temp.sort(function (a, b) {
+                        temp.sort(function(a, b) {
                             return Object.keys(b.model().edgeSets()).length - Object.keys(a.model().edgeSets()).length;
                         });
 
@@ -155,7 +169,7 @@
                     });
 
                     /* jshint -W083 */
-                    nx.each(ary, function (node, i) {
+                    nx.each(ary, function(node, i) {
                         var index = secondGroup.indexOf(node);
                         if (index !== -1) {
                             secondGroup.splice(index, 1);
@@ -167,19 +181,19 @@
                 this.groups(nx.extend({}, groups));
                 return groups;
             },
-            _layout: function (nodesPositionObject, callback) {
+            _layout: function(nodesPositionObject, callback) {
                 var topo = this.topology();
 
 
                 var queueCounter = 0;
                 var nodeLength = 0;
-                var finish = function () {
+                var finish = function() {
                     if (queueCounter == nodeLength) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             topo.getLayer('links').show();
                             topo.getLayer('linkSet').show();
                             topo.stage().resetFitMatrix();
-                            topo.fit(function () {
+                            topo.fit(function() {
 
                                 if (callback) {
                                     callback.call(topo);
@@ -193,10 +207,10 @@
                 //
                 topo.getLayer('links').hide();
                 topo.getLayer('linkSet').hide();
-                nx.each(nodesPositionObject, function (n, id) {
+                nx.each(nodesPositionObject, function(n, id) {
                     var node = topo.getNode(id);
                     if (node) {
-                        node.translateTo(n.x, n.y, function () {
+                        node.translateTo(n.x, n.y, function() {
                             queueCounter++;
                             finish();
                         });

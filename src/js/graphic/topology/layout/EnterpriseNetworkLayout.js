@@ -1,19 +1,19 @@
-(function (nx, global) {
+(function(nx, global) {
 
     nx.define("nx.graphic.Topology.EnterpriseNetworkLayout", nx.graphic.Topology.HierarchicalLayout, {
-        properties: {
-        },
+        properties: {},
         methods: {
 
-            process: function (graph, config, callback) {
-                this.inherited(graph, config, function () {
+            process: function(graph, config, callback) {
+                this.inherited(graph, config, function() {
                     this._appendGroupElements();
                     if (callback) {
-                        callback();
+                        var topo = this.topology();
+                        callback.call(topo);
                     }
                 }.bind(this));
             },
-            _appendGroupElements: function () {
+            _appendGroupElements: function() {
                 var topo = this.topology();
                 var matrix = topo.matrix();
                 var layer = topo.prependLayer('ENLLayer', new Layer());
@@ -27,17 +27,19 @@
                 var y = padding;
                 var items = [];
                 var gap = 0;
-                nx.each(groups, function (nodes, key) {
+                nx.each(groups, function(nodes, key) {
                     var label = key !== '__other__' ? key : '';
                     var firstNode = nodes[0];
-                    items.push({
-                        left: (padding - matrix.x()) / matrix.scale(),
-                        top: firstNode.y() - 30 / matrix.scale(),
-                        width: width / matrix.scale(),
-                        height: 65 / matrix.scale(),
-                        label: label,
-                        stroke: '#b2e47f'
-                    });
+                    if (firstNode) {
+                        items.push({
+                            left: (padding - matrix.x()) / matrix.scale(),
+                            top: firstNode.y() - 30 / matrix.scale(),
+                            width: width / matrix.scale(),
+                            height: 65 / matrix.scale(),
+                            label: label,
+                            stroke: '#b2e47f'
+                        });
+                    }
                     y += perHeight;
                 }, this);
 
@@ -67,25 +69,22 @@
                 scale: '{#scale}'
             },
 
-            content: [
-                {
-                    type: 'nx.graphic.Text',
-                    props: {
-                        text: '{#label}',
-                        fill: '{#stroke}',
-                        'style': 'font-size:19px',
-                        y: -5
-                    }
-                },
-                {
-                    type: 'nx.graphic.Rect',
-                    props: {
-                        width: '{#width}',
-                        height: '{#height}',
-                        stroke: '{#stroke}'
-                    }
+            content: [{
+                type: 'nx.graphic.Text',
+                props: {
+                    text: '{#label}',
+                    fill: '{#stroke}',
+                    'style': 'font-size:19px',
+                    y: -5
                 }
-            ]
+            }, {
+                type: 'nx.graphic.Rect',
+                props: {
+                    width: '{#width}',
+                    height: '{#height}',
+                    stroke: '{#stroke}'
+                }
+            }]
         }
     });
 
@@ -95,27 +94,25 @@
         },
         view: {
             type: 'nx.graphic.Group',
-            content: [
-                {
-                    type: 'nx.graphic.Group',
-                    props: {
-                        items: '{#items}',
-                        template: {
-                            type: GroupItem,
-                            props: {
-                                top: '{top}',
-                                left: '{left}',
-                                label: '{label}',
-                                width: '{width}',
-                                height: '{height}',
-                                scale: '{scale}',
-                                stroke: '{stroke}',
-                                fill: 'none'
-                            }
+            content: [{
+                type: 'nx.graphic.Group',
+                props: {
+                    items: '{#items}',
+                    template: {
+                        type: GroupItem,
+                        props: {
+                            top: '{top}',
+                            left: '{left}',
+                            label: '{label}',
+                            width: '{width}',
+                            height: '{height}',
+                            scale: '{scale}',
+                            stroke: '{stroke}',
+                            fill: 'none'
                         }
                     }
                 }
-            ]
+            }]
         }
     });
 

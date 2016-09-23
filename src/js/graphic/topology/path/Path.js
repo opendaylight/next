@@ -192,9 +192,14 @@
             reverse: {
                 value: false
             },
-            owner: {
-
-            },
+            owner: {},
+            /**
+             * Source node defines the path direction
+             * It fixes the bug, when you try to draw one-link path and it goes in different direction
+             * In that case, sourceNode defines the real direction of the vector
+             * @property sourceNode
+             */
+            sourceNode: {},
             topology: {}
         },
         methods: {
@@ -223,6 +228,14 @@
                     topo = this.topology(),
                     allEdges = nx.path(this, "topology.graph.edges"),
                     allVertices = nx.path(this, "topology.graph.vertices");
+
+                // Fix 1-link bug (used to take wrong direction sometimes)
+                if(this.links().length == 1 && this.sourceNode() !== undefined){
+                    if(this.sourceNode().id() == this.links()[0].model().target().id()){
+                        this.reverse(true);
+                    }
+                }
+
                 nx.each(this.verticesIdCollection(), function(id) {
                     var item = allVertices.getItem(id);
                     if (!item.generated()) {

@@ -326,10 +326,10 @@ var Demo = nx.define(nx.ui.Component, {
 
             this.addItem({
                 categoryName: 'Path',
-                itemKey: 'pathbynodes',
-                itemLabel: 'Path by nodes',
-                files: ['path/path-by-nodes.js'],
-                itemClass: 'Path.ByNodes'
+                itemKey: 'sourcenode',
+                itemLabel: 'Set source node',
+                files: ['path/source-node.js'],
+                itemClass: 'Path.SourceNode'
             });
 
             this.addItem({

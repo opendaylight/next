@@ -325,6 +325,14 @@ var Demo = nx.define(nx.ui.Component, {
 			});
 
             this.addItem({
+                categoryName: 'Path',
+                itemKey: 'pathbynodes',
+                itemLabel: 'Path by nodes',
+                files: ['path/path-by-nodes.js'],
+                itemClass: 'Path.ByNodes'
+            });
+
+            this.addItem({
                 categoryName: 'Map',
                 itemKey: 'us',
                 itemLabel: 'US Map',

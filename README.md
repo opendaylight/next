@@ -82,19 +82,28 @@ Git :  https://git.opendaylight.org/gerrit/p/next
 
 ### Environment requirements
 
-[Node](https://nodejs.org/en/)
+In order to build NeXt from sources, you must have [Node.js](https://nodejs.org/) installed. 
 
-### build process
-* npm install
-* grunt
+After that, make sure to have [Grunt](https://www.npmjs.com/package/grunt) installed. To do so, run:
+
+```
+npm install grunt
+```
+
+### Build process
+* ```npm install``` to install npm modules
+* ```grunt``` to build from sources
 
 ## Who's Using NeXt
+Here we feature a few customers who choose NeXt framework as their topology visualization tool and use it in their products.
 
-* Cisco
-* Verizon
-* AT&T (DIRECTV)
+* [Cisco](https://cisco.com/)
+* [Verizon](https://www.verizonwireless.com)
+* [AT&T](https://att.com)
+* [HP Enterprise](https://hpe.com)
+* [NTS Netzwerk Telekom Service AG](http://www.nts.eu/en/)
 
-Are you NeXt?
+Are you *next*?
 
 ## Bugs
 

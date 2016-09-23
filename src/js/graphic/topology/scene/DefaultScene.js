@@ -158,8 +158,12 @@
             updateNodeCoordinate: function () {
 
             },
-
-
+            clickLinkSet: function(){
+                this._topo.selectedNodes().clear();
+            },
+            clickLink: function(){
+                this._topo.selectedNodes().clear();
+            },
             enterLink: function (sender, events) {
             },
 

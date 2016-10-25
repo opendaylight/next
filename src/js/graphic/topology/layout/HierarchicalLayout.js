@@ -42,7 +42,7 @@
                 var levelBy = config.levelBy || this.levelBy();
                 topo.eachNode(function(node) {
                     var key;
-                    if (nx.is(levelBy, 'String') && levelBy.substr(5) == 'model') {
+                    if (nx.is(levelBy, 'String') && levelBy.substr(0,5) == 'model') {
                         key = node.model().get(levelBy.substring(6));
                     } else {
                         key = levelBy.call(topo, node, node.model());

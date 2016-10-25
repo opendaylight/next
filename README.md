@@ -6,7 +6,7 @@ Homepage : https://wiki.opendaylight.org/view/NeXt:Main
 
 UI Toolkit Quicklook : https://www.youtube.com/watch?v=gBsUDu8aucs
 
-Current version : 0.9
+Current version : 1.0
 
 ## Key Features
 

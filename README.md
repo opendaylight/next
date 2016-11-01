@@ -6,7 +6,7 @@ Homepage : https://wiki.opendaylight.org/view/NeXt:Main
 
 UI Toolkit Quicklook : https://www.youtube.com/watch?v=gBsUDu8aucs
 
-Current version : 1.0
+Current version : 0.10
 
 ## Key Features
 
@@ -93,6 +93,24 @@ npm install grunt
 ### Build process
 * ```npm install``` to install npm modules
 * ```grunt``` to build from sources
+
+### Authorized Devs Only: Bower Updates
+You should only update Bower if the build is stable, or a major issue has been fixed.
+
+To do so, type in the command line:
+
+```
+node update-bower.js -u {{GITHUB USERNAME}} -p {{GITHUB PASSWORD}} -v {{VERSION NUMBER}}
+```
+Make sure to turn ```{{GITHUB USERNAME}}```, ```{{GITHUB PASSWORD}}``` and ```{{NEW VERSION}}``` into appropriate values.
+
+Example: 
+
+```
+node update-bower.js -u gituser -p 123456 -v 0.1.0
+```
+
+Leave the terminal window open until you see ```Done!``` message.
 
 ## Who's Using NeXt
 Here we feature a few customers who choose NeXt framework as their topology visualization tool and use it in their products.

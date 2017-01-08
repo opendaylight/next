@@ -61,7 +61,7 @@ module.exports = function(grunt) {
             compile: {
                 "name": "Next UI Toolkit",
                 "description": "Next UI Toolkit API docs",
-                "version": "0.9.0",
+                "version": "1.0.0",
                 "url": "https://wiki.opendaylight.org/view/NeXt:Main",
                 "logo": "http://abdvl.github.io/src/bin/logo.svg",
                 options: {

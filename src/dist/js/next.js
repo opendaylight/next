@@ -3,7 +3,7 @@
  */
 
 var nx = {
-    VERSION: '0.9.0',
+    VERSION: '1.0.0',
     DEBUG: false,
     global: (function () {
         return this;
@@ -22037,7 +22037,6 @@ var nx = {
                 var levelBy = config.levelBy || this.levelBy();
                 topo.eachNode(function(node) {
                     var key;
-                    // substr should start from 0
                     if (nx.is(levelBy, 'String') && levelBy.substr(0,5) == 'model') {
                         key = node.model().get(levelBy.substring(6));
                     } else {

@@ -18,8 +18,8 @@ if(argv.hasOwnProperty("u") && argv.hasOwnProperty("p") && argv.hasOwnProperty("
 	var remoteOrigin = "https://" +
 		gitUsername + ":" +
 		gitPassword +
-		//"@github.com/NeXt-UI/next-bower.git";
-		"@github.com/zverevalexei/export-test.git";
+		"@github.com/NeXt-UI/next-bower.git";
+		//"@github.com/zverevalexei/export-test.git";
 
 	git()
 		// delete & pull down

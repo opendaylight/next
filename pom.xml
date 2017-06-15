@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent</artifactId>
-        <version>1.7.4-SNAPSHOT</version>
+        <version>1.7.4-Boron-SR4</version>
         <relativePath></relativePath>
     </parent>
 
@@ -14,7 +14,7 @@
 
     <groupId>org.opendaylight.next</groupId>
     <artifactId>next</artifactId>
-    <version>0.10.4-SNAPSHOT</version>
+    <version>0.10.4-Boron-SR4</version>
     <packaging>pom</packaging>
 
     <build>
